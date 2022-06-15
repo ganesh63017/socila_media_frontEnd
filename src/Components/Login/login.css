@@ -1,0 +1,30 @@
+.main_login{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    max-width: 1500px;
+    height:700px;
+}
+.login_card{
+   min-height: 400px;
+    min-width: 500px;
+    margin-left: 750px;
+    margin-top: 20vh;
+    border-radius: 8px;
+    padding: 26px;
+    box-shadow: rgba(0.24, 0.24, 0.24, 0.24) 0px 3px 8px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+.login_heading{
+    font-weight: 700;
+    align-self:center;
+    marginBottom: 30px;
+    font-size: 24px;
+}
+.login_email{
+    width: 400px;
+    align-self:center;
+}
