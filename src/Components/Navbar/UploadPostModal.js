@@ -49,7 +49,7 @@ export default function UploadPostModal({ openModalPost, handleModalPost }) {
   const [caption, setCaption] = React.useState("");
   const [imagesError, setImagesError] = React.useState("");
   const [showLocations, setShowLocations] = React.useState(false);
-  const [location, setLocation] = React.useState("");
+  const [location, setLocation] = React.useState("India");
   const getLocation = (value) => {
     setLocation(value);
   };
