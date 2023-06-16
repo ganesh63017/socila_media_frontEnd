@@ -84,7 +84,7 @@ export default function UploadPostModal({ openModalPost, handleModalPost }) {
 
     formData.append("caption", caption);
     formData.append("likes", []);
-    formData.append("location", location);
+    formData.append("location", location || "INDIA");
     const url = `${BASE_URL}/feeds/posts`;
 
     const options = {
