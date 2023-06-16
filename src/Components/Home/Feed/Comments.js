@@ -419,7 +419,7 @@ const Comments = ({ id, getPostData, getAllComments, time }) => {
           marginBottom: "0px",
         }}
       >
-        {currentPostData[0].created_by.lastName}{" "}
+        {currentPostData[0].created_by.firstName}{" "}
         <span
           style={{
             fontWeight: 500,
@@ -582,7 +582,7 @@ const Comments = ({ id, getPostData, getAllComments, time }) => {
                       marginBottom: "0px",
                     }}
                   >
-                    {currentPostData[0].created_by.lastName}
+                    {currentPostData[0].created_by.firstName}
                     <p
                       style={{
                         color: "grey",
@@ -663,7 +663,7 @@ const Comments = ({ id, getPostData, getAllComments, time }) => {
                               marginTop: "5px",
                             }}
                           >
-                            {each.created_by.lastName}
+                            {each.created_by.firstName}
                           </p>
                           <p
                             style={{

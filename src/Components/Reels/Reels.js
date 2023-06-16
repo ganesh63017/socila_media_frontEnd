@@ -8,7 +8,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Backdrop from "@mui/material/Backdrop";
 import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
-import BASE_URL from '../service.js'
+import BASE_URL from "../service.js";
 
 const Reel = () => {
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ const Reel = () => {
 
   const getData = async () => {
     dispatch({ type: "loading", payload: true });
-    const url = `${BASE_URL}/video`
+    const url = `${BASE_URL}/video`;
     const options = {
       headers: {
         "Content-type": "application/json",
@@ -163,7 +163,7 @@ const Reel = () => {
                     src={`${BASE_URL}/${each.created_by.profile_pic}`}
                   />
                 )}
-                <p>{each.created_by.lastName}</p>
+                <p>{each.created_by.firstName}</p>
               </div>
             </Card>
           );

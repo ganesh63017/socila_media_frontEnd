@@ -184,7 +184,7 @@ const Feed = () => {
                         width: "100%",
                       }}
                     >
-                      {each.created_by.lastName}
+                      {each.created_by.firstName}
                     </p>
                     <p
                       className="m-0"
