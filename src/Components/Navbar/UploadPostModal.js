@@ -19,8 +19,7 @@ import Alert from "@mui/material/Alert";
 import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import GoogleMaps from "../GoogleMaps/Maps";
-
-const baseUrl = "http://localhost:8080";
+import BASE_URL from "../service.js";
 
 const style = {
   position: "absolute",
@@ -51,7 +50,6 @@ export default function UploadPostModal({ openModalPost, handleModalPost }) {
   const [imagesError, setImagesError] = React.useState("");
   const [showLocations, setShowLocations] = React.useState(false);
   const [location, setLocation] = React.useState("");
-console.log(location)
   const getLocation = (value) => {
     setLocation(value);
   };
@@ -87,7 +85,7 @@ console.log(location)
     formData.append("caption", caption);
     formData.append("likes", []);
     formData.append("location", location);
-    const url = "http://localhost:8080/feeds/posts";
+    const url = `${BASE_URL}/feeds/posts`;
 
     const options = {
       method: "POST",
@@ -127,7 +125,7 @@ console.log(location)
 
   const getPostData = async () => {
     dispatch({ type: "loading", action: true });
-    const url = `${baseUrl}/feeds/posts`;
+    const url = `${BASE_URL}/feeds/posts`;
     const options = {
       method: "GET",
       headers: {
@@ -166,8 +164,6 @@ console.log(location)
     }
   };
 
-
-
   return (
     <div>
       {goToComment ? (
@@ -179,8 +175,9 @@ console.log(location)
           <Box
             sx={style}
             style={{
-              minWidth: "1500px",
-              minHeight: "700px",
+              width: "1000px",
+              maxHeight: "550px",
+              overflowX: "hidden",
               border: "none",
               borderRadius: "10px",
               boxShadow: "rgba(0.24, 0.24, 0.24, 0.24) 0px 3px 8px",
@@ -237,7 +234,7 @@ console.log(location)
                   ) : (
                     <Avatar
                       style={{ position: "inherit" }}
-                      src={`http://localhost:8080/${userData.user.profile_pic}`}
+                      src={`${BASE_URL}/${userData.user.profile_pic}`}
                     />
                   )}
                   <p
@@ -310,8 +307,9 @@ console.log(location)
                       style={{
                         padding: "20px",
                         height: "200px",
-                        overflow: "scroll",
                         border: "1px solid #a5abb5",
+                        position: "relative",
+                        zIndex: 5,
                       }}
                     >
                       <GoogleMaps getLocation={getLocation} />
@@ -470,7 +468,7 @@ console.log(location)
               sx={style}
               style={{
                 minWidth: "680px",
-                minHeight: "550px",
+                height: "550px",
                 border: "none",
                 boxShadow: "rgba(0.24, 0.24, 0.24, 0.24) 0px 3px 8px",
                 display: "flex",
@@ -507,7 +505,11 @@ console.log(location)
                         Next
                       </p>
                     </div>
-                    <img alt="pic" src={previewPhotos[0].url} />
+                    <img
+                      alt="pic"
+                      src={previewPhotos[0].url}
+                      style={{ height: "400px", objectFit: "contain" }}
+                    />
                     <input
                       type="file"
                       multiple

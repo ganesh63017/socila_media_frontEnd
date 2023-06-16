@@ -4,8 +4,8 @@ const SlideShowPreview = ({ slideImages, size }) => {
   return (
     <div>
       <SimpleImageSlider
-        width={size ? 900 : 608}
-        height={size ? 700 : 508}
+        width={size ? 410 : 608}
+        height={size ? 500 : 400}
         images={slideImages}
         showBullets={true}
         showNavs={true}

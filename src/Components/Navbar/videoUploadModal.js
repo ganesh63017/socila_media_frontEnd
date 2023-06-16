@@ -6,7 +6,6 @@ import ReactPlayer from "react-player";
 import { Button } from "@mui/material";
 
 const VideoUploadModal = ({ url, close, videoModal ,onUploadVideo}) => {
-  // console.log({close , videoModal,url})
   const style = {
     position: "absolute",
     top: "50%",

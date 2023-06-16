@@ -1,11 +1,11 @@
 import { Avatar } from "@mui/material";
 import React from "react";
-import { useSelector } from "react-redux";
 import "./index.css";
+import BASE_URL from "../../service.js";
+
 const GetReplies = ({ repliesData, uniqueId }) => {
   const replies = repliesData.filter((each) => each._id === uniqueId);
-  console.log(replies);
-  //   console.log(uniqueId);
+
   const getTime = (date) => {
     const seconds = Math.floor((new Date() - new Date(date)) / 1000);
 
@@ -32,20 +32,20 @@ const GetReplies = ({ repliesData, uniqueId }) => {
 
     interval = Math.floor(seconds / 60);
     if (interval >= 1) {
-      return interval + " minutes ago";
+      return interval + " min ago";
     }
 
-    return Math.floor(seconds) + " seconds ago";
+    return Math.floor(seconds) + " sec ago";
   };
 
   return (
     <div
       style={{
-        height: "200px",
+        height: "150px",
         overflow: "scroll",
         backgroundColor: "#f8faf2",
         padding: "20px",
-        width: "550px",
+        width: "427px",
         marginTop: "14px",
         marginBottom: "16px",
       }}
@@ -54,17 +54,16 @@ const GetReplies = ({ repliesData, uniqueId }) => {
         replies[0]?.comments?.map((each) => {
           const date1 = new Date(each.time);
           return (
-            <div key={each.time} className="back m-1">
+            <div key={each.time} className="back" style={{ marginTop: "-5px" }}>
               <div
                 style={{
+                  width: "203px",
                   display: "flex",
                   justifyContent: "space-around",
                 }}
               >
                 {each?.userDetails?.profile_pic !== "" ? (
-                  <Avatar
-                    src={`http://localhost:8080//${each.userDetails.profile_pic}`}
-                  />
+                  <Avatar src={`${BASE_URL}/${each.userDetails.profile_pic}`} />
                 ) : (
                   <Avatar />
                 )}
@@ -74,7 +73,13 @@ const GetReplies = ({ repliesData, uniqueId }) => {
                 </p>
               </div>
               <div className="d-flex">
-                <p style={{ color: "grey", marginLeft: "5vh" }}>
+                <p
+                  style={{
+                    color: "grey",
+                    marginLeft: "9vh",
+                    marginTop: "-18px",
+                  }}
+                >
                   {getTime(date1)}
                 </p>
               </div>

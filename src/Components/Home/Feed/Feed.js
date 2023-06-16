@@ -7,8 +7,8 @@ import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import Comments from "./Comments";
 import Skeleton from "@mui/material/Skeleton";
+import BASE_URL from "../../service.js";
 
-const baseUrl = "http://localhost:8080";
 const Feed = () => {
   const dispatch = useDispatch();
   const token = Cookies.get("token");
@@ -21,9 +21,7 @@ const Feed = () => {
   }, []);
 
   const getUserData = async () => {
-    const url = `http://localhost:8080/users/${
-      state && state.userData.user._id
-    }`;
+    const url = `${BASE_URL}/users/${state && state.userData.user._id}`;
 
     const options = {
       method: "GET",
@@ -41,7 +39,7 @@ const Feed = () => {
   };
 
   const getAllComments = async () => {
-    const url = "http://localhost:8080/feeds/comments";
+    const url = `${BASE_URL}/feeds/comments`;
     const options = {
       method: "GET",
       headers: {
@@ -59,7 +57,7 @@ const Feed = () => {
 
   const getPostData = async () => {
     dispatch({ type: "loading", payload: true });
-    const url = `${baseUrl}/feeds/posts`;
+    const url = `${BASE_URL}/feeds/posts`;
     const options = {
       method: "GET",
       headers: {
@@ -103,10 +101,10 @@ const Feed = () => {
 
     interval = Math.floor(seconds / 60);
     if (interval > 1) {
-      return interval + " minutes ago";
+      return interval + " min ago";
     }
 
-    return Math.floor(seconds) + " seconds ago";
+    return Math.floor(seconds) + " sec ago";
   };
 
   return (
@@ -166,7 +164,7 @@ const Feed = () => {
                   {each.created_by.profile_pic !== "" ? (
                     <Avatar
                       style={{ position: "inherit" }}
-                      src={`${baseUrl}/${each.created_by.profile_pic}`}
+                      src={`${BASE_URL}/${each.created_by.profile_pic}`}
                     />
                   ) : (
                     <Avatar className="m-0" style={{ position: "inherit" }} />
@@ -202,7 +200,7 @@ const Feed = () => {
               ) : (
                 <div>
                   <img
-                    src={`${baseUrl}/${each.posted_photos[0]}`}
+                    src={`${BASE_URL}/${each.posted_photos[0]}`}
                     alt="pic"
                     width="608"
                     height="550"

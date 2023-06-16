@@ -26,6 +26,7 @@ import EditPage from "../Edit/EditPage";
 import HomeIcon from "@mui/icons-material/Home";
 import VideoLibraryIcon from "@mui/icons-material/VideoLibrary";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import BASE_URL from '../service.js'
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -43,7 +44,7 @@ const Navbar = () => {
   }, []);
 
   const getUserData = async () => {
-    const url = `http://localhost:8080/users/${userData.user._id}`;
+    const url = `${BASE_URL}/users/${userData.user._id}`;
 
     const options = {
       method: "GET",
@@ -127,7 +128,7 @@ const Navbar = () => {
         errorHandle("currentPasswordError");
       }
     } else {
-      const url = "http://localhost:8080/password";
+      const url = `${BASE_URL}/password`;
 
       const options = {
         method: "PATCH",
@@ -168,7 +169,7 @@ const Navbar = () => {
     const formData = new FormData();
     formData.append("profile_pic", event.target.files[0]);
     if (window.confirm("Do u want to update the profile picture")) {
-      const url = `http://localhost:8080/users/profile/${userData.user._id}`;
+      const url = `${BASE_URL}/users/profile/${userData.user._id}`;
       const options = {
         method: "PATCH",
         headers: {
@@ -201,7 +202,7 @@ const Navbar = () => {
   const deleteProfileImage = async () => {
     setOpenProfile((pre) => !pre);
     if (window.confirm("Do u want to delete the profile picture")) {
-      const url = `http://localhost:8080/users/profile/${userData.user._id}`;
+      const url = `${BASE_URL}/users/profile/${userData.user._id}`;
       const options = {
         method: "DELETE",
         headers: {
@@ -231,7 +232,7 @@ const Navbar = () => {
   };
 
   const getPostData = async () => {
-    const url = `http://localhost:8080/feeds/posts`;
+    const url = `${BASE_URL}/feeds/posts`;
     const options = {
       method: "GET",
       headers: {
@@ -247,7 +248,6 @@ const Navbar = () => {
   };
   
 const onUploadVideo = (e)=>{
-  console.log(e.target.files[0])
   const url = URL.createObjectURL(e.target.files[0])
   SetVideoUrl(url)
   setVideoModal(true)
@@ -256,7 +256,6 @@ const onUploadVideo = (e)=>{
 const closeVideoModal = ()=>{
   setVideoModal(false)
 }
-console.log(videoModal)
   return (
     <>
       <div
@@ -376,19 +375,19 @@ console.log(videoModal)
                 userData && userData?.user?.profile_pic === "" ? (
                   <Avatar
                     style={{
-                      height: "4vh",
-                      marginTop: "12px",
+                      height: "5vh",
+                      marginTop: "18px",
                       cursor: "pointer",
                     }}
                   ></Avatar>
                 ) : (
                   <Avatar
                     style={{
-                      height: "4vh",
-                      marginTop: "12px",
+                      height: "5vh",
+                      marginTop: "18px",
                       cursor: "pointer",
                     }}
-                    src={`http://localhost:8080/${userData?.user?.profile_pic}`}
+                    src={`${BASE_URL}/${userData?.user?.profile_pic}`}
                   />
                 )
               }
@@ -592,21 +591,20 @@ console.log(videoModal)
           style={{
             padding: "20px",
             minWidth: "600px",
-            minHeight: "900px",
+            height: "530px",
+            overflowY: "scroll",
             border: "none",
-            borderRadius: "10px",
+            overflow: "auto",
             boxShadow: "rgba(0.24, 0.24, 0.24, 0.24) 0px 3px 8px",
             flexDirection: "row",
             alignContent: "center",
+            outline: 'none',
           }}
         >
-          <div style={{ display: "flex" }}>
+          <div style={{ display: "flex" ,justifyContent: "space-between",}}>
             <h4
               style={{
-                justifyContent: "center",
-                marginLeft: "22vh",
                 fontWeight: 700,
-                marginTop: "30px",
               }}
             >
               Profile Update
@@ -628,6 +626,7 @@ console.log(videoModal)
               justifyContent: "center",
               alignContent: "center",
               cursor: "pointer",
+              marginBottom: '10px',
             }}
           >
             {userData && userData.user?.profile_pic === "" ? (
@@ -636,20 +635,20 @@ console.log(videoModal)
                   alignSelf: "center",
                   marginTop: "30px",
                   fontSize: "100px",
-                  height: "8vh",
-                  width: "75px",
+                  height: "12vh",
+                  width: "70px",
                   position: "relative",
                 }}
               ></Avatar>
             ) : (
               <Avatar
                 style={{
-                  height: "8vh",
-                  width: "75px",
+                  height: "12vh",
+                  width: "70px",
                   marginTop: "30px",
                   cursor: "pointer",
                 }}
-                src={`http://localhost:8080/${userData?.user?.profile_pic}`}
+                src={`${BASE_URL}/${userData?.user?.profile_pic}`}
               />
             )}
             <Button

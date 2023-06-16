@@ -11,7 +11,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import SlideShow from "../Home/Feed/SlideShow";
 import GetReplies from "../Home/Feed/GetReplies";
-const baseUrl = "http://localhost:8080";
+import BASE_URL from '../service.js'
 
 const style = {
   position: "absolute",
@@ -30,7 +30,6 @@ const PoatModal = ({ id, openCommentSection, setOpenCommentSection }) => {
   const { commentsDataOfPost, userData, savedPost } = state;
   const currentPostData =
     state.postData && state.postData.filter((each) => each._id === id);
-  console.log({ commentsDataOfPost, currentPostData });
   const likesCount = currentPostData[0] && currentPostData[0].likes.length;
 
   const [{ postId, commentId }, setReplyDetails] = useState({
@@ -41,7 +40,7 @@ const PoatModal = ({ id, openCommentSection, setOpenCommentSection }) => {
   const [showReplies, setReplyId] = useState("");
 
   const addLike = async () => {
-    const url = `http://localhost:8080/feeds/likes/${id}`;
+    const url = `${BASE_URL}/feeds/likes/${id}`;
     const options = {
       method: "PATCH",
       headers: {
@@ -56,7 +55,7 @@ const PoatModal = ({ id, openCommentSection, setOpenCommentSection }) => {
   };
 
   const getPostData = async () => {
-    const url = `${baseUrl}/feeds/posts`;
+    const url = `${BASE_URL}/feeds/posts`;
     const options = {
       method: "GET",
       headers: {
@@ -72,7 +71,7 @@ const PoatModal = ({ id, openCommentSection, setOpenCommentSection }) => {
   };
 
   const postComment = async (value) => {
-    const url = `http://localhost:8080/feeds/comments/${id}`;
+    const url = `${BASE_URL}/feeds/comments/${id}`;
     const options = {
       method: "POST",
       headers: {
@@ -92,12 +91,11 @@ const PoatModal = ({ id, openCommentSection, setOpenCommentSection }) => {
   let inputRef = React.useRef(null);
   const replyToComment = async (value) => {
     inputRef.current.focus();
-    console.log(id, value);
     setReplyDetails({ postId: id, commentId: value });
   };
 
   const getAllComments = async () => {
-    const url = "http://localhost:8080/feeds/comments";
+    const url = "${BASE_URL}/feeds/comments";
     const options = {
       method: "GET",
       headers: {
@@ -114,8 +112,7 @@ const PoatModal = ({ id, openCommentSection, setOpenCommentSection }) => {
   };
 
   const addLikeToComment = async (id) => {
-    console.log(id);
-    const url = `http://localhost:8080/feeds/comments/likes/${id}`;
+    const url = `${BASE_URL}/feeds/comments/likes/${id}`;
 
     const options = {
       method: "POST",
@@ -126,16 +123,14 @@ const PoatModal = ({ id, openCommentSection, setOpenCommentSection }) => {
     };
     const response = await fetch(url, options);
     const data = await response.json();
-    console.log(data);
     if (response.ok) {
       getComment();
     }
   };
 
   const getComment = async (value) => {
-    console.log(value);
     setOpenCommentSection(true);
-    const url = `http://localhost:8080/feeds/comments/${value ? value : id}`;
+    const url = `${BASE_URL}/feeds/comments/${value ? value : id}`;
     const options = {
       method: "GET",
       headers: {
@@ -156,8 +151,7 @@ const PoatModal = ({ id, openCommentSection, setOpenCommentSection }) => {
     if (postId === "") {
       postComment(text);
     } else {
-      console.log("first");
-      const url = `http://localhost:8080/feeds/comments/${postId}/${commentId}`;
+      const url = `${BASE_URL}/feeds/comments/${postId}/${commentId}`;
       const options = {
         method: "POST",
         headers: {
@@ -179,7 +173,7 @@ const PoatModal = ({ id, openCommentSection, setOpenCommentSection }) => {
     if (postId === "") {
       postComment(comment);
     } else {
-      const url = `http://localhost:8080/feeds/comments/${postId}/${commentId}`;
+      const url = `${BASE_URL}/feeds/comments/${postId}/${commentId}`;
       const options = {
         method: "POST",
         headers: {
@@ -198,7 +192,7 @@ const PoatModal = ({ id, openCommentSection, setOpenCommentSection }) => {
   };
 
   const getSavedPost = async () => {
-    const url = "http://localhost:8080/feeds/save";
+    const url = "${BASE_URL}/feeds/save";
     const options = {
       method: "GET",
       headers: {
@@ -215,7 +209,7 @@ const PoatModal = ({ id, openCommentSection, setOpenCommentSection }) => {
   };
 
   const savePost = async (id) => {
-    const url = `http://localhost:8080/feeds/save/${id}`;
+    const url = `${BASE_URL}/feeds/save/${id}`;
     const options = {
       method: "POST",
       headers: {
@@ -231,8 +225,7 @@ const PoatModal = ({ id, openCommentSection, setOpenCommentSection }) => {
   };
 
   const removeSavePost = async (id) => {
-    console.log(id);
-    const url = `http://localhost:8080/feeds/save/${id}`;
+    const url = `${BASE_URL}/feeds/save/${id}`;
     const options = {
       method: "DELETE",
       headers: {
@@ -299,7 +292,7 @@ const PoatModal = ({ id, openCommentSection, setOpenCommentSection }) => {
           ) : (
             <div>
               <img
-                src={`${baseUrl}/${currentPostData[0]?.posted_photos[0]}`}
+                src={`${BASE_URL}/${currentPostData[0]?.posted_photos[0]}`}
                 alt="pic"
                 width="800"
                 height="760"
@@ -340,7 +333,7 @@ const PoatModal = ({ id, openCommentSection, setOpenCommentSection }) => {
               {currentPostData[0] &&
               currentPostData[0]?.created_by?.profile_pic !== "" ? (
                 <Avatar
-                  src={`http://localhost:8080//${currentPostData[0].created_by.profile_pic}`}
+                  src={`${BASE_URL}//${currentPostData[0].created_by.profile_pic}`}
                 />
               ) : (
                 <Avatar />
@@ -426,7 +419,7 @@ const PoatModal = ({ id, openCommentSection, setOpenCommentSection }) => {
                       >
                         {each?.created_by?.profile_pic !== "" ? (
                           <Avatar
-                            src={`http://localhost:8080//${each.created_by.profile_pic}`}
+                            src={`${BASE_URL}//${each.created_by.profile_pic}`}
                           />
                         ) : (
                           <Avatar />
@@ -622,7 +615,7 @@ const PoatModal = ({ id, openCommentSection, setOpenCommentSection }) => {
             {userData.user.profile_pic !== "" ? (
               <Avatar
                 style={{ position: "inherit" }}
-                src={`http://localhost:8080//${userData.user.profile_pic}`}
+                src={`${BASE_URL}//${userData.user.profile_pic}`}
               />
             ) : (
               <Avatar className="m-0" style={{ position: "inherit" }} />

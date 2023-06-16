@@ -15,9 +15,9 @@ import MuiAlert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-
+import BASE_URL from "../service.js";
 import "./login.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [openModal, setOpenModal] = useState(false);
@@ -27,8 +27,7 @@ const Register = () => {
   const [verificationMessage, setVerificationMessage] = useState("");
   const [openverifySuccessfull, setOpenverifySuccessfull] = useState(false);
   const [verifyToken, setVerifyToken] = useState("");
-  console.log(token);
-
+  const Navigate = useNavigate();
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -81,7 +80,7 @@ const Register = () => {
         errorHandle("passwordError");
       }
     } else {
-      const url = "http://localhost:8080/auth/register";
+      const url = `${BASE_URL}/auth/register`;
       const userDetails = {
         lastName,
         firstName,
@@ -118,7 +117,10 @@ const Register = () => {
         }, 1000);
         setTimeout(() => {
           setOpen(false);
-        }, 3000);
+        }, 1500);
+        setTimeout(() => {
+          Navigate("/login");
+        }, 1500);
       }
     }
   };
@@ -142,7 +144,7 @@ const Register = () => {
   };
 
   const sendVerification = async () => {
-    const url = "http://localhost:8080/auth/send-verification-email";
+    const url = `${BASE_URL}/auth/send-verification-email`;
 
     const options = {
       method: "POST",
@@ -162,7 +164,7 @@ const Register = () => {
   };
 
   const verifyTokenLink = async () => {
-    const url = `http://localhost:8080/auth/verify-email?token=${verifyToken}`;
+    const url = `${BASE_URL}auth/verify-email?token=${verifyToken}`;
     const options = {
       method: "POST",
       headers: {
@@ -271,6 +273,7 @@ const Register = () => {
             className="login_email"
             style={{
               "margin-bottom": "15px",
+              "max-width": "48vw",
             }}
             value={email}
             onChange={changeInput("email")}
@@ -309,6 +312,7 @@ const Register = () => {
             <OutlinedInput
               style={{
                 "margin-bottom": "15px",
+                width: '34vw"',
               }}
               error={passwordError !== "" && "error"}
               className="login_email"
@@ -367,6 +371,7 @@ const Register = () => {
           variant="contained"
           style={{
             "margin-bottom": "10px",
+            width: "90%",
           }}
           onClick={registerDetails}
         >
@@ -397,7 +402,7 @@ const Register = () => {
             sx={{ width: "100%" }}
           >
             {errorMessage === ""
-              ? "Successfully Registered Please Verify Your Email"
+              ? "Successfully Registered Please login"
               : errorMessage}
           </Alert>
         </Snackbar>
@@ -419,7 +424,7 @@ const Register = () => {
           </Alert>
         </Snackbar>
       </Stack>
-      <Modal
+      {/* <Modal
         open={openModal}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -505,7 +510,7 @@ const Register = () => {
             </>
           )}
         </Box>
-      </Modal>
+      </Modal> */}
     </div>
   );
 };

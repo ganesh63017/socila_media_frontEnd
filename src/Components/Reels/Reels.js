@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Avatar, Card, Stack } from "@mui/material";
+import { Avatar, Card } from "@mui/material";
 import ReactPlayer from "react-player";
 import { useDispatch, useSelector } from "react-redux";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
@@ -8,16 +8,11 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Backdrop from "@mui/material/Backdrop";
 import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
-import Moment from 'react-moment';
-
-
-
-const baseUrl = "http://localhost:8080";
+import BASE_URL from '../service.js'
 
 const Reel = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
-  console.log(state);
 
   useEffect(() => {
     getData();
@@ -26,7 +21,7 @@ const Reel = () => {
 
   const getData = async () => {
     dispatch({ type: "loading", payload: true });
-    const url = "http://localhost:8080/video";
+    const url = `${BASE_URL}/video`
     const options = {
       headers: {
         "Content-type": "application/json",
@@ -35,7 +30,6 @@ const Reel = () => {
     };
     const response = await fetch(url, options);
     const data = await response.json();
-    console.log(data);
     if (response.ok) {
       setTimeout(() => {
         dispatch({ type: "loading", payload: false });
@@ -78,7 +72,7 @@ const Reel = () => {
 
     interval = Math.floor(seconds / 60);
     if (interval >= 1) {
-      return interval + " minutes ago";
+      return interval + " min ago";
     }
 
     return Math.floor(seconds) + " seconds ago";
@@ -122,8 +116,8 @@ const Reel = () => {
               >
                 <div>
                   <p>{each.title}</p>
-                  {/* <p>{getTime(each.createdAt)}</p> */}
-                  <Moment className="moment-edit" fromNow>{each.createdAt}</Moment>
+                  <p>{getTime(each.createdAt)}</p>
+                  {/* <Moment className="moment-edit" fromNow>{each.createdAt}</Moment> */}
                 </div>
                 <div
                   style={{
@@ -145,7 +139,11 @@ const Reel = () => {
                   ) : (
                     <ThumbDownOffAltIcon />
                   )}
-                  {each.likes.length > 0 ? <p>{each.likes.length} DISLIKE </p>:<p>DISLIKE</p>}
+                  {each.likes.length > 0 ? (
+                    <p>{each.likes.length} DISLIKE </p>
+                  ) : (
+                    <p>DISLIKE</p>
+                  )}
                 </div>
               </div>
               <div
@@ -162,7 +160,7 @@ const Reel = () => {
                 ) : (
                   <Avatar
                     style={{ position: "inherit" }}
-                    src={`${baseUrl}/${each.created_by.profile_pic}`}
+                    src={`${BASE_URL}/${each.created_by.profile_pic}`}
                   />
                 )}
                 <p>{each.created_by.lastName}</p>

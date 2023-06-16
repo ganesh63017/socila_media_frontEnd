@@ -17,10 +17,11 @@ import Cookies from "js-cookie";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import CancelIcon from "@mui/icons-material/Cancel";
-
+import BASE_URL from "../service.js";
 import "./login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [open, setOpen] = React.useState(false);
@@ -75,7 +76,7 @@ const Login = () => {
         errorHandle("passwordError");
       }
     } else {
-      const url = "http://localhost:8080/auth/login";
+      const url = `${BASE_URL}/auth/login`;
 
       const options = {
         method: "POST",
@@ -111,7 +112,7 @@ const Login = () => {
   });
 
   const googleLogin = async (googleData) => {
-    const url = "http://localhost:8080/auth/googleLogin";
+    const url = `${BASE_URL}/auth/googleLogin`;
     const options = {
       method: "POST",
       headers: {
@@ -121,7 +122,6 @@ const Login = () => {
     };
     const response = await fetch(url, options);
     const data = await response.json();
-    console.log(data);
     if (response.ok) {
       Cookies.set("token", data.token, { expires: 1 });
       dispatch({ type: "userData", payload: data });
@@ -141,7 +141,7 @@ const Login = () => {
   };
 
   const forgotPassword = async () => {
-    const url = "http://localhost:8080/auth/forgot-password";
+    const url = `${BASE_URL}/auth/forgot-password`;
     const options = {
       method: "POST",
       headers: {
@@ -168,7 +168,7 @@ const Login = () => {
   };
 
   const resetPassword = async () => {
-    const url = `http://localhost:8080/auth/reset-password?token=${forgotToken}`;
+    const url = `${BASE_URL}/auth/reset-password?token=${forgotToken}`;
     const options = {
       method: "POST",
       headers: {
@@ -202,7 +202,6 @@ const Login = () => {
             label="Email id*"
             variant="outlined"
             className="login_email"
-            fullWidth
             style={{
               "margin-bottom": "15px",
             }}
@@ -243,7 +242,7 @@ const Login = () => {
             <OutlinedInput
               style={{
                 "margin-bottom": "15px",
-                width: "47vh",
+                "max-width": "100%",
               }}
               error={passwordError !== "" && "error"}
               className="login_email"
@@ -300,12 +299,12 @@ const Login = () => {
         </div>
         <button
           style={{
-            width: "100%",
             backgroundColor: "#1976D2",
             border: "none",
-            height: "5vh",
+            height: "6vh",
             borderRadius: "6px",
             color: "white",
+            width: "90%",
           }}
           onClick={handleLogin}
         >
@@ -318,6 +317,7 @@ const Login = () => {
             fontSize: "15px",
             cursor: "pointer",
             color: "#1976D2",
+            marginRight: "42px",
           }}
           onClick={() => setOpenModalForgot(true)}
         >

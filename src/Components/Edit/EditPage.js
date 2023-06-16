@@ -11,6 +11,7 @@ import FormLabel from "@mui/material/FormLabel";
 import MuiPhoneNumber from "material-ui-phone-number";
 
 import { useSelector } from "react-redux";
+import BASE_URL from "../service";
 
 const EditPage = ({ getUserData, setEditPopup }) => {
   React.useEffect(() => {
@@ -49,7 +50,7 @@ const EditPage = ({ getUserData, setEditPopup }) => {
         mobile_number === "" ? personDetails.mobile_number : mobile_number,
       email: email === "" ? personDetails.email : email,
     };
-    const url = `http://localhost:8080/users/${personDetails._id}`;
+    const url = `${BASE_URL}/users/${personDetails._id}`;
     const options = {
       method: "PATCH",
       headers: {
@@ -81,115 +82,106 @@ const EditPage = ({ getUserData, setEditPopup }) => {
   };
 
   return (
-    <>
-      <div>
-        <TextField
-          label="Name*"
-          variant="outlined"
-          className="login_email"
-          fullWidth
-          style={{
-            marginBottom: "15px",
-            marginTop: "15px  ",
-          }}
+    <div>
+      <TextField
+        label="Name*"
+        variant="outlined"
+        className="login_email"
+        fullWidth
+        style={{
+          marginBottom: "15px",
+          marginTop: "15px  ",
+        }}
+        defaultValue={
+          personDetails.lastName ? personDetails.lastName : lastName
+        }
+        onChange={changeInput("lastName")}
+      />
+      <TextField
+        label="Email*"
+        variant="outlined"
+        className="login_email"
+        fullWidth
+        style={{
+          marginBottom: "15px",
+          marginTop: "15px  ",
+        }}
+        defaultValue={personDetails.email ? personDetails.email : email}
+        onChange={changeInput("email")}
+      />
+      <TextareaAutosize
+        style={{ width: "100%", padding: "20px" }}
+        aria-label="empty textarea"
+        placeholder="Enter your bio here....."
+        minRows={4}
+        defaultValue={personDetails.bio ? personDetails.bio : bio}
+        onChange={changeInput("bio")}
+      />
+      <FormControl>
+        <FormLabel id="demo-row-radio-buttons-group-label">Gender</FormLabel>
+        <RadioGroup
+          row
+          aria-labelledby="demo-row-radio-buttons-group-label"
+          name="row-radio-buttons-group"
+          defaultValue={personDetails.gender ? personDetails.gender : gender}
+          onChange={changeInput("gender")}
+        >
+          <FormControlLabel value="female" control={<Radio />} label="Female" />
+          <FormControlLabel value="male" control={<Radio />} label="Male" />
+          <FormControlLabel value="other" control={<Radio />} label="Other" />
+        </RadioGroup>
+      </FormControl>
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <label style={{ fontWeight: "500" }}>Date of birth</label>
+        <input
+          type="date"
+          style={{ width: "300px", marginTop: "10px" }}
           defaultValue={
-            personDetails.lastName ? personDetails.lastName : lastName
+            personDetails.date_of_birth
+              ? personDetails.date_of_birth
+              : date_of_birth
           }
-          onChange={changeInput("lastName")}
+          onChange={changeInput("date_of_birth")}
         />
-        <TextField
-          label="Email*"
-          variant="outlined"
-          className="login_email"
-          fullWidth
-          style={{
-            marginBottom: "15px",
-            marginTop: "15px  ",
-          }}
-          defaultValue={personDetails.email ? personDetails.email : email}
-          onChange={changeInput("email")}
-        />
-        <TextareaAutosize
-          style={{ width: "100%", padding: "20px" }}
-          aria-label="empty textarea"
-          placeholder="Enter your bio here....."
-          minRows={4}
-          defaultValue={personDetails.bio ? personDetails.bio : bio}
-          onChange={changeInput("bio")}
-        />
-        <FormControl>
-          <FormLabel id="demo-row-radio-buttons-group-label">Gender</FormLabel>
-          <RadioGroup
-            row
-            aria-labelledby="demo-row-radio-buttons-group-label"
-            name="row-radio-buttons-group"
-            defaultValue={personDetails.gender ? personDetails.gender : gender}
-            onChange={changeInput("gender")}
-          >
-            <FormControlLabel
-              value="female"
-              control={<Radio />}
-              label="Female"
-            />
-            <FormControlLabel value="male" control={<Radio />} label="Male" />
-            <FormControlLabel value="other" control={<Radio />} label="Other" />
-          </RadioGroup>
-        </FormControl>
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <label style={{ fontWeight: "500" }}>Date of birth</label>
-          <input
-            type="date"
-            style={{ width: "300px", marginTop: "10px" }}
-            defaultValue={
-              personDetails.date_of_birth
-                ? personDetails.date_of_birth
-                : date_of_birth
-            }
-            onChange={changeInput("date_of_birth")}
-          />
-        </div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            marginTop: "20px",
-            marginBottom: "50px",
-          }}
-        >
-          <label htmlFor="phone" style={{ fontWeight: "500" }}>
-            Enter contact number
-          </label>
-          <MuiPhoneNumber
-            style={{
-              width: "300px",
-            }}
-            onChange={(e) => setMobileNum(e)}
-            defaultCountry={"in"}
-            value={
-              personDetails.mobile_number
-                ? personDetails.mobile_number
-                : mobile_number
-            }
-            fullWidth
-          />
-        </div>
-        <Button variant="contained" fullWidth onClick={submitDetails}>
-          Save profile
-        </Button>
-        <Snackbar
-          open={openSnack}
-          autoHideDuration={6000}
-          anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        >
-          <Alert
-            severity={ErrorMsg ? "error" : "success"}
-            sx={{ width: "100%" }}
-          >
-            {ErrorMsg !== "" ? ErrorMsg : successMsg}
-          </Alert>
-        </Snackbar>
       </div>
-    </>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          marginTop: "20px",
+          marginBottom: "50px",
+        }}
+      >
+        <label htmlFor="phone" style={{ fontWeight: "500" }}>
+          Enter contact number
+        </label>
+        <MuiPhoneNumber
+          style={{
+            width: "300px",
+          }}
+          onChange={(e) => setMobileNum(e)}
+          defaultCountry={"in"}
+          value={
+            personDetails.mobile_number
+              ? personDetails.mobile_number
+              : mobile_number
+          }
+          fullWidth
+        />
+      </div>
+      <Button variant="contained" fullWidth onClick={submitDetails}>
+        Save profile
+      </Button>
+      <Snackbar
+        open={openSnack}
+        autoHideDuration={6000}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      >
+        <Alert severity={ErrorMsg ? "error" : "success"} sx={{ width: "100%" }}>
+          {ErrorMsg !== "" ? ErrorMsg : successMsg}
+        </Alert>
+      </Snackbar>
+    </div>
   );
 };
 

@@ -2,9 +2,11 @@ import React from "react";
 import SimpleImageSlider from "react-simple-image-slider";
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
+import BASE_URL from '../../service.js'
+
 const SlideShow = ({ slideImages, height, width, navSize }) => {
   const dataConversion = slideImages.map((each, i) => {
-    return { url: `http://localhost:8080/${each}` };
+    return { url: `${BASE_URL}/${each}` };
   });
   return (
     <div style={{ position: "relative", margin: "5px" }}>

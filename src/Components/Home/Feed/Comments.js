@@ -14,7 +14,7 @@ import SlideShow from "./SlideShow";
 import ClearIcon from "@mui/icons-material/Clear";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import GetReplies from "./GetReplies";
-import Moment from 'react-moment';
+import BASE_URL from "../../service.js";
 
 const Comments = ({ id, getPostData, getAllComments, time }) => {
   useEffect(() => {
@@ -25,7 +25,6 @@ const Comments = ({ id, getPostData, getAllComments, time }) => {
   const [successMsg, SetSuccessMsg] = React.useState("");
   const [ErrorMsg, SetErrorMsg] = React.useState("");
 
-  const baseUrl = "http://localhost:8080";
   const style = {
     position: "absolute",
     top: "50%",
@@ -55,7 +54,7 @@ const Comments = ({ id, getPostData, getAllComments, time }) => {
   const [openCommentSection, setOpenCommentSection] = useState(false);
 
   const addLike = async () => {
-    const url = `http://localhost:8080/feeds/likes/${id}`;
+    const url = `${BASE_URL}/feeds/likes/${id}`;
     const options = {
       method: "PATCH",
       headers: {
@@ -70,7 +69,7 @@ const Comments = ({ id, getPostData, getAllComments, time }) => {
   };
 
   const getSavedPost = async () => {
-    const url = "http://localhost:8080/feeds/save";
+    const url = `${BASE_URL}/feeds/save`;
     const options = {
       method: "GET",
       headers: {
@@ -88,7 +87,7 @@ const Comments = ({ id, getPostData, getAllComments, time }) => {
 
   const postComment = async (value) => {
     dispatch({ type: "loading", payload: true });
-    const url = `http://localhost:8080/feeds/comments/${id}`;
+    const url = `${BASE_URL}/feeds/comments/${id}`;
     const options = {
       method: "POST",
       headers: {
@@ -132,8 +131,7 @@ const Comments = ({ id, getPostData, getAllComments, time }) => {
     if (postId === "") {
       postComment(text);
     } else {
-      console.log("first");
-      const url = `http://localhost:8080/feeds/comments/${postId}/${commentId}`;
+      const url = `${BASE_URL}/feeds/comments/${postId}/${commentId}`;
       const options = {
         method: "POST",
         headers: {
@@ -158,7 +156,7 @@ const Comments = ({ id, getPostData, getAllComments, time }) => {
     if (postId === "") {
       postComment(comment);
     } else {
-      const url = `http://localhost:8080/feeds/comments/${postId}/${commentId}`;
+      const url = `${BASE_URL}/feeds/comments/${postId}/${commentId}`;
       const options = {
         method: "POST",
         headers: {
@@ -179,7 +177,7 @@ const Comments = ({ id, getPostData, getAllComments, time }) => {
   };
 
   const addLikeToComment = async (id) => {
-    const url = `http://localhost:8080/feeds/comments/likes/${id}`;
+    const url = `${BASE_URL}/feeds/comments/likes/${id}`;
 
     const options = {
       method: "POST",
@@ -196,8 +194,7 @@ const Comments = ({ id, getPostData, getAllComments, time }) => {
 
   const getComment = async (value) => {
     dispatch({ type: "loading", payload: true });
-    console.log(value);
-    const url = `http://localhost:8080/feeds/comments/${value ? value : id}`;
+    const url = `${BASE_URL}/feeds/comments/${value ? value : id}`;
     const options = {
       method: "GET",
       headers: {
@@ -207,7 +204,6 @@ const Comments = ({ id, getPostData, getAllComments, time }) => {
     };
     const response = await fetch(url, options);
     const data = await response.json();
-    console.log(data);
     if (response.ok) {
       setTimeout(() => {
         dispatch({ type: "loading", payload: false });
@@ -219,7 +215,7 @@ const Comments = ({ id, getPostData, getAllComments, time }) => {
 
   const savePost = async (id) => {
     dispatch({ type: "loading", payload: true });
-    const url = `http://localhost:8080/feeds/save/${id}`;
+    const url = `${BASE_URL}/feeds/save/${id}`;
     const options = {
       method: "POST",
       headers: {
@@ -254,7 +250,7 @@ const Comments = ({ id, getPostData, getAllComments, time }) => {
   const removeSavePost = async (id) => {
     dispatch({ type: "loading", payload: true });
 
-    const url = `http://localhost:8080/feeds/save/${id}`;
+    const url = `${BASE_URL}/feeds/save/${id}`;
     const options = {
       method: "DELETE",
       headers: {
@@ -311,19 +307,17 @@ const Comments = ({ id, getPostData, getAllComments, time }) => {
     }
 
     interval = Math.floor(seconds / 60);
-    console.log(interval);
     if (interval >= 1) {
-      return interval + " minutes ago";
+      return interval + " min ago";
     }
 
-    return Math.floor(seconds) + " seconds ago";
+    return Math.floor(seconds) + " sec ago";
   };
 
   let inputRef = useRef(null);
 
   const replyToComment = async (value) => {
     inputRef.current.focus();
-    console.log(id, value);
     setReplyDetails({ postId: id, commentId: value });
   };
 
@@ -478,7 +472,7 @@ const Comments = ({ id, getPostData, getAllComments, time }) => {
         {userData?.user?.profile_pic !== "" ? (
           <Avatar
             style={{ position: "inherit" }}
-            src={`http://localhost:8080//${userData?.user?.profile_pic}`}
+            src={`${BASE_URL}/${userData?.user?.profile_pic}`}
           />
         ) : (
           <Avatar className="m-0" style={{ position: "inherit" }} />
@@ -515,27 +509,28 @@ const Comments = ({ id, getPostData, getAllComments, time }) => {
         <Box
           sx={style}
           style={{
-            width: "1450px",
-            height: "760px",
+            width: "1130px",
+            height: "624px",
             display: "flex",
             justifyContent: "space-evenly",
             padding: "0px",
+            overflow: "auto",
           }}
         >
           <div>
             {currentPostData[0].posted_photos.length > 1 ? (
               <SlideShow
                 slideImages={currentPostData[0].posted_photos}
-                height={752}
-                width={800}
+                height={600}
+                width={600}
               />
             ) : (
               <div>
                 <img
-                  src={`${baseUrl}/${currentPostData[0].posted_photos[0]}`}
+                  src={`${BASE_URL}/${currentPostData[0].posted_photos[0]}`}
                   alt="pic"
-                  width="800"
-                  height="760"
+                  width="600"
+                  height="600"
                 />
               </div>
             )}
@@ -544,7 +539,7 @@ const Comments = ({ id, getPostData, getAllComments, time }) => {
             style={{
               cursor: "pointer",
               justifyContent: "space-around",
-              width: "700px",
+              width: "500px",
               margin: "0px",
               borderBottom: "1px solid #d0d6ce",
               height: "14vh",
@@ -566,14 +561,13 @@ const Comments = ({ id, getPostData, getAllComments, time }) => {
                 style={{
                   display: "flex",
                   justifyContent: "space-around",
-                  marginRight: "250px",
-                  marginTop: "20px",
+                  marginTop: "60px",
                 }}
               >
                 {currentPostData[0] &&
                 currentPostData[0]?.created_by?.profile_pic !== "" ? (
                   <Avatar
-                    src={`http://localhost:8080//${currentPostData[0].created_by.profile_pic}`}
+                    src={`${BASE_URL}/${currentPostData[0].created_by.profile_pic}`}
                   />
                 ) : (
                   <Avatar />
@@ -584,7 +578,7 @@ const Comments = ({ id, getPostData, getAllComments, time }) => {
                       marginLeft: "18px",
                       fontWeight: 600,
                       marginTop: "0px",
-                      fontSize: "16px",
+                      fontSize: "14px",
                       marginBottom: "0px",
                     }}
                   >
@@ -600,7 +594,8 @@ const Comments = ({ id, getPostData, getAllComments, time }) => {
                     <p
                       style={{
                         fontWeight: 500,
-                        fontSize: "18px",
+                        fontSize: "14px",
+                        visibility: 'hidden',
                       }}
                     >
                       {currentPostData[0].caption}
@@ -616,7 +611,11 @@ const Comments = ({ id, getPostData, getAllComments, time }) => {
                     dispatch({ type: "commentsDataOfPost", payload: [] });
                     setReplyDetails({ postId: "", commentId: "" });
                   }}
-                  style={{ marginBottom: "20px", marginLeft: "20px" }}
+                  style={{
+                    marginBottom: "5px",
+                    marginLeft: "41px",
+                    fontSize: "12px",
+                  }}
                 />
                 <p style={{ color: "grey", fontSize: "14px" }}>{time}</p>
               </div>
@@ -625,7 +624,7 @@ const Comments = ({ id, getPostData, getAllComments, time }) => {
               style={{
                 marginTop: "10px",
                 padding: "20px",
-                height: "400px",
+                height: "350px",
                 overflow: "scroll",
               }}
             >
@@ -638,7 +637,7 @@ const Comments = ({ id, getPostData, getAllComments, time }) => {
                       style={{
                         display: "flex",
                         justifyContent: "space-between",
-                        width: "550px",
+                        width: "420px",
                         alignItems: "center",
                         marginLeft: "0px",
                         marginBottom: "20px",
@@ -653,27 +652,38 @@ const Comments = ({ id, getPostData, getAllComments, time }) => {
                         >
                           {each?.created_by?.profile_pic !== "" ? (
                             <Avatar
-                              src={`http://localhost:8080//${each.created_by.profile_pic}`}
+                              src={`${BASE_URL}/${each.created_by.profile_pic}`}
                             />
                           ) : (
                             <Avatar />
                           )}
                           <p
                             style={{
-                              marginLeft: "20px",
+                              marginLeft: "-37px",
+                              marginTop: "5px",
                             }}
                           >
                             {each.created_by.lastName}
                           </p>
-                          <p style={{ color: "grey", marginLeft: "20px" }}>
+                          <p
+                            style={{
+                              color: "grey",
+                              marginLeft: "-8px",
+                              marginTop: "5px",
+                            }}
+                          >
                             {each.comment}
                           </p>
                         </div>
-                        <div className="d-flex">
+                        <div
+                          className="d-flex"
+                          style={{
+                            marginTop: "-13px",
+                          }}
+                        >
                           <p style={{ color: "grey", marginLeft: "60px" }}>
                             {getTime(date1)}
                           </p>
-                          {/* <Moment className="moment-edit" fromNow>{each.createdAt}</Moment> */}
                           <p
                             style={{
                               color: "grey",
@@ -851,7 +861,7 @@ const Comments = ({ id, getPostData, getAllComments, time }) => {
               {userData?.user?.profile_pic !== "" ? (
                 <Avatar
                   style={{ position: "inherit" }}
-                  src={`http://localhost:8080//${userData?.user?.profile_pic}`}
+                  src={`${BASE_URL}/${userData?.user?.profile_pic}`}
                 />
               ) : (
                 <Avatar className="m-0" style={{ position: "inherit" }} />

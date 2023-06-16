@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SlideShow from "../Home/Feed/SlideShow";
 import PoatModal from "../modal/PoatModal";
-const baseUrl = "http://localhost:8080";
+import BASE_URL from '../service.js'
 const SavedPost = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
@@ -16,7 +16,7 @@ const SavedPost = () => {
   }, []);
 
   const getSavedPost = async () => {
-    const url = "http://localhost:8080/feeds/save";
+    const url = `${BASE_URL}/feeds/save`;
     const options = {
       method: "GET",
       headers: {
@@ -34,7 +34,7 @@ const SavedPost = () => {
 
   const getData = async (id) => {
     setId(id);
-    const url = `http://localhost:8080/feeds/comments/${id}`;
+    const url = `${BASE_URL}/feeds/comments/${id}`;
     const options = {
       method: "GET",
       headers: {
@@ -95,7 +95,7 @@ const SavedPost = () => {
               >
                 <img
                   alt="pic"
-                  src={`${baseUrl}/${each.savedPost.posted_photos[0]}`}
+                  src={`${BASE_URL}/${each.savedPost.posted_photos[0]}`}
                   style={{
                     height: "300px",
                     width: "300px",
