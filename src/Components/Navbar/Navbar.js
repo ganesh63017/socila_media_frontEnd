@@ -33,7 +33,7 @@ const Navbar = () => {
   const { userData, clickedSave, clickedHome, videoUpload } = useSelector(
     (state) => state
   );
-
+console.log(videoUpload)
   const [openSnack, SetOpenSnack] = React.useState(false);
   const [successMsg, SetSuccessMsg] = React.useState("");
   const [ErrorMsg, SetErrorMsg] = React.useState("");
@@ -251,10 +251,12 @@ const onUploadVideo = (e)=>{
   const url = URL.createObjectURL(e.target.files[0])
   SetVideoUrl(url)
   setVideoModal(true)
+  document.body.style.zoom = "60%";
 }
 
 const closeVideoModal = ()=>{
   setVideoModal(false)
+  document.body.style.zoom = "100%";
 }
   return (
     <>
@@ -478,7 +480,7 @@ const closeVideoModal = ()=>{
                 fontSize: "18px",
               }}
             >
-              {userData && userData.user?.lastName}
+              {userData && userData.user?.firstName}
             </p>
           </div>
           {videoUpload && (

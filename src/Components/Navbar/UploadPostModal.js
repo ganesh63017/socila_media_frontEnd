@@ -214,8 +214,8 @@ export default function UploadPostModal({ openModalPost, handleModalPost }) {
               ) : (
                 <img
                   style={{
-                    width: "900px",
-                    height: "700px",
+                    width: "410px",
+                    height: "500px",
                     marginBottom: "0px",
                   }}
                   alt="pic"

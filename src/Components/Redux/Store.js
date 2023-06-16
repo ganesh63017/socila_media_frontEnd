@@ -7,8 +7,8 @@ const initialState = {
   clickedSave: false,
   clickedHome: true,
   loading: false,
-  videoUpload:false,
-  reels:[]
+  videoUpload: true,
+  reels: [],
 };
 
 export default initialState;

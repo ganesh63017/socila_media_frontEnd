@@ -383,9 +383,7 @@ const Login = () => {
             severity={errorMessage === "" ? "success" : "error"}
             sx={{ width: "100%" }}
           >
-            {errorMessage === ""
-              ? "Successfully Registered Please Verify Your Email"
-              : errorMessage}
+            {errorMessage === "" ? "Successfully logged In" : errorMessage}
           </Alert>
         </Snackbar>
         <Snackbar open={openforgot} autoHideDuration={6000}>
