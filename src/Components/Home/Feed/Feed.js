@@ -8,12 +8,12 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Comments from "./Comments";
 import Skeleton from "@mui/material/Skeleton";
 import BASE_URL from "../../service.js";
-
+import { decryptToken } from "../../encryptionUtils";
 const Feed = () => {
   const dispatch = useDispatch();
-  const token = Cookies.get("token");
+  const decrypted = Cookies.get("token");
+  const token = decryptToken(decrypted);
   const state = useSelector((state) => state);
-
   useEffect(() => {
     getPostData();
     getAllComments();

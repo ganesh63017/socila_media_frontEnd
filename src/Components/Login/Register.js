@@ -194,7 +194,7 @@ const Register = () => {
               label="First Name*"
               variant="outlined"
               style={{
-                "margin-bottom": "20px",
+                marginBottom: "20px",
                 margin: "5px",
               }}
               value={firstName}
@@ -232,7 +232,7 @@ const Register = () => {
               label="Last Name*"
               variant="outlined"
               style={{
-                "margin-bottom": "20px",
+                marginBottom: "20px",
                 margin: "5px",
               }}
               value={lastName}
@@ -272,8 +272,8 @@ const Register = () => {
             variant="outlined"
             className="login_email"
             style={{
-              "margin-bottom": "15px",
-              "max-width": "48vw",
+              marginBottom: "15px",
+              maxWidth: "48vw",
             }}
             value={email}
             onChange={changeInput("email")}
@@ -311,7 +311,7 @@ const Register = () => {
             </InputLabel>
             <OutlinedInput
               style={{
-                "margin-bottom": "15px",
+                marginBottom: "15px",
                 width: '34vw"',
               }}
               error={passwordError !== "" && "error"}
@@ -370,7 +370,7 @@ const Register = () => {
         <Button
           variant="contained"
           style={{
-            "margin-bottom": "10px",
+            marginBottom: "10px",
             width: "90%",
           }}
           onClick={registerDetails}

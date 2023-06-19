@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Cookies from "js-cookie";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useNavigate } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
-// import Navbar from "../HomeNavbar/Navbar";
 
 const ProtectedRoute = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (!document.cookie || localStorage.length === 0) navigate("/login");
+      // console.log(document.cookie.split(";"));
+    }, 2000);
+
+    // Clean up the interval when the component unmounts
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+
   const token = Cookies.get("token");
   return token ? (
     <>

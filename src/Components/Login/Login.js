@@ -21,6 +21,7 @@ import BASE_URL from "../service.js";
 import "./login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { encryptToken } from "../encryptionUtils.js";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -87,9 +88,12 @@ const Login = () => {
       };
       const response = await fetch(url, options);
       const data = await response.json();
-
       if (response.ok) {
-        Cookies.set("token", data.token, { expires: 1 });
+        Cookies.set("token", encryptToken(data.token), {
+          secure: true,
+          sameSite: "strict",
+          expires: 1,
+        });
         dispatch({ type: "userData", payload: data });
         setOpen(true);
         setErrorMessage("");
@@ -203,7 +207,7 @@ const Login = () => {
             variant="outlined"
             className="login_email"
             style={{
-              "margin-bottom": "15px",
+              marginBottom: "15px",
             }}
             value={email}
             onChange={changeInput("email")}
@@ -241,8 +245,8 @@ const Login = () => {
             </InputLabel>
             <OutlinedInput
               style={{
-                "margin-bottom": "15px",
-                "max-width": "100%",
+                marginBottom: "15px",
+                maxWidth: "100%",
               }}
               error={passwordError !== "" && "error"}
               className="login_email"
@@ -412,10 +416,10 @@ const Login = () => {
           aria-describedby="modal-modal-description"
         >
           {showForgetEmail ? (
-            <Box sx={style} style={{ width: "550px", height: "35vh" }}>
+            <Box sx={style} style={{ width: "480px", height: "64vh" }}>
               <CancelIcon
                 style={{
-                  marginLeft: "50vh",
+                  marginLeft: "70vh",
                   cursor: "pointer",
                 }}
                 onClick={() => setOpenModalForgot(false)}

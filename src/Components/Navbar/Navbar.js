@@ -33,7 +33,6 @@ const Navbar = () => {
   const { userData, clickedSave, clickedHome, videoUpload } = useSelector(
     (state) => state
   );
-console.log(videoUpload)
   const [openSnack, SetOpenSnack] = React.useState(false);
   const [successMsg, SetSuccessMsg] = React.useState("");
   const [ErrorMsg, SetErrorMsg] = React.useState("");
