@@ -397,6 +397,7 @@ const closeVideoModal = ()=>{
               <div
                 className="card border-top-0 rounded shadow-lg"
                 style={{
+                  position: 'fixed',
                   width: "250px",
                   cursor: "pointer",
                 }}

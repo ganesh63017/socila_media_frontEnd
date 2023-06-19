@@ -24,9 +24,9 @@ const Reducer = (state = initialState, action) => {
     case "loading":
       return { ...state, loading: payload };
     case "videoUpload":
-      return {...state,videoUpload:payload}
-      case "reels":
-        return {...state,reels:payload}
+      return { ...state, videoUpload: payload };
+    case "reels":
+      return { ...state, reels: payload };
     default:
       return state;
   }
