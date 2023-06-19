@@ -99,6 +99,7 @@ const Login = () => {
         setErrorMessage("");
         setTimeout(() => {
           setOpen(false);
+          window.location.reload()
           navigate("/feeds");
         }, 1500);
       } else {
