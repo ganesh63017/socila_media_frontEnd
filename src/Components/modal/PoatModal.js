@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -11,7 +11,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import SlideShow from "../Home/Feed/SlideShow";
 import GetReplies from "../Home/Feed/GetReplies";
-import BASE_URL from '../service.js'
+import BASE_URL from "../service.js";
 
 const style = {
   position: "absolute",
@@ -25,6 +25,8 @@ const style = {
   p: 4,
 };
 const PoatModal = ({ id, openCommentSection, setOpenCommentSection }) => {
+  document.body.style.zoom = "57%";
+
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const { commentsDataOfPost, userData, savedPost } = state;

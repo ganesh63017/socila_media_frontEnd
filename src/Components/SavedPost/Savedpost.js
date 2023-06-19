@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SlideShow from "../Home/Feed/SlideShow";
 import PoatModal from "../modal/PoatModal";
-import BASE_URL from '../service.js'
+import BASE_URL from "../service.js";
 const SavedPost = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
@@ -12,6 +12,7 @@ const SavedPost = () => {
   const [ID, setId] = useState("");
 
   useEffect(() => {
+    document.body.style.zoom = "57%";
     getSavedPost();
   }, []);
 
@@ -45,6 +46,8 @@ const SavedPost = () => {
     const response = await fetch(url, options);
     const data = await response.json();
     if (response.ok) {
+      document.body.style.zoom = "70%";
+
       setOpenCommentSection(true);
       dispatch({ type: "commentsDataOfPost", payload: data.data });
     }

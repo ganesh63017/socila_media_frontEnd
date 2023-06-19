@@ -15,6 +15,7 @@ const Feed = () => {
   const token = decryptToken(decrypted);
   const state = useSelector((state) => state);
   useEffect(() => {
+    document.body.style.zoom = "80%";
     getPostData();
     getAllComments();
     getUserData();
