@@ -483,12 +483,12 @@ const closeVideoModal = ()=>{
               {userData && userData.user?.firstName}
             </p>
           </div>
-          {videoUpload && (
+          {/* {videoUpload && (
             <Button component="label">
               <CloudUploadIcon style={styleForLogo} />
               <input type="file" hidden accept="video/*" onChange={onUploadVideo}/>
             </Button>
-          )} 
+          )}  */}
         </div>
       </div>
       <Modal
