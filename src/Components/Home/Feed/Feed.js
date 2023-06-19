@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import { Avatar, Card, Stack } from "@mui/material";
@@ -9,6 +9,7 @@ import Comments from "./Comments";
 import Skeleton from "@mui/material/Skeleton";
 import BASE_URL from "../../service.js";
 import { decryptToken } from "../../encryptionUtils";
+import NorthIcon from "@mui/icons-material/North";
 const Feed = () => {
   const dispatch = useDispatch();
   const decrypted = Cookies.get("token");
@@ -107,6 +108,31 @@ const Feed = () => {
 
     return Math.floor(seconds) + " sec ago";
   };
+
+  const [direction, setDirection] = useState(window.scrollY);
+  const [currentDirection, setcurrentDirection] = useState("");
+
+  const handleNavigation = useCallback(
+    (e) => {
+      const window = e.currentTarget;
+      if (direction > window.scrollY) {
+        setcurrentDirection("scrolling up");
+      } else if (direction < window.scrollY) {
+        setcurrentDirection("scrolling down");
+      }
+      setDirection(window.scrollY);
+    },
+    [direction]
+  );
+
+  useEffect(() => {
+    setDirection(window.scrollY);
+    window.addEventListener("scroll", handleNavigation);
+
+    return () => {
+      window.removeEventListener("scroll", handleNavigation);
+    };
+  }, [handleNavigation]);
 
   return (
     <div
@@ -228,6 +254,22 @@ const Feed = () => {
         <Skeleton variant="circular" width={40} height={40} />
         <Skeleton variant="rectangular" width={600} height={128} />
       </Stack>
+      {currentDirection === "scrolling down" && (
+        <p
+          onClick={() => window.scrollTo(5000, 0)}
+          style={{
+            position: "fixed",
+            left: "90%",
+            top: "90%",
+            textAlign: "center",
+            cursor: "pointer",
+            backgroundColor: "#72b1db",
+          }}
+          className="ccc"
+        >
+          <NorthIcon />
+        </p>
+      )}
     </div>
   );
 };
